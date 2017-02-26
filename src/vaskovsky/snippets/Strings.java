@@ -11,10 +11,10 @@ public class Strings
 	 * @param delimiter is a delimiter string.
 	 * @param strings are source strings to join.
 	 * @return a string containing source strings delimited by delimiter.
-	 * @exception NullPointerException if delimiter or strings are null.
+	 * @throws NullPointerException if delimiter or strings are null.
 	 * @author Alexey Vaskovsky <http://vaskovsky.net/java-snippets/>
 	 */
-	public static String join(String delimiter, String[] strings)
+	public static <T> String join(String delimiter, T[] strings)
 	{
 		if(delimiter == null || strings == null)
 			throw new NullPointerException();
@@ -35,16 +35,16 @@ public class Strings
 	 * @param delimiter is a delimiter string.
 	 * @param strings are source strings to join.
 	 * @return a string containing source strings delimited by delimiter.
-	 * @exception NullPointerException if delimiter or strings are null.
+	 * @throws NullPointerException if delimiter or strings are null.
 	 * @author Alexey Vaskovsky <http://vaskovsky.net/java-snippets/>
 	 */
 	public static String join(String delimiter,
-		java.util.Collection<Object> strings)
+		java.util.Collection<?> strings)
 	{
 		if(delimiter == null || strings == null)
 			throw new NullPointerException();
 		StringBuilder buffer = new StringBuilder();
-		java.util.Iterator<Object> it = strings.iterator();
+		java.util.Iterator<?> it = strings.iterator();
 		if(it.hasNext()) {
 			buffer.append(it.next());
 		}
@@ -61,11 +61,11 @@ public class Strings
 	 * @param delimiter is a delimiter string.
 	 * @param strings are source strings to join.
 	 * @return a string containing source strings delimited by delimiter.
-	 * @exception NullPointerException if delimiter or strings are null.
+	 * @throws NullPointerException if delimiter or strings are null.
 	 * @author Alexey Vaskovsky <http://vaskovsky.net/java-snippets/>
 	 */
 	public static String join(String delimiter,
-		java.util.Enumeration<Object> strings)
+		java.util.Enumeration<?> strings)
 	{
 		if(delimiter == null || strings == null)
 			throw new NullPointerException();
@@ -81,14 +81,51 @@ public class Strings
 	}
 
 	/**
+	 * Repeats a string several times.
+	 * 
+	 * @param str is the string to repeat.
+	 * @param times is the number of times to repeat `str`.
+	 * @return a new String consisting of `str` repeated specified number of
+	 *         times.
+	 * @throws IllegalArgumentException if the `str` is null or empty; if
+	 *             `times` less than zero.
+	 * @author Alexey Vaskovsky <http://vaskovsky.net/java-snippets/>
+	 */
+	public static String repeat(String str, int times)
+	{
+		if(str == null || str.isEmpty() || times < 0)
+			throw new IllegalArgumentException("" + str);
+		StringBuilder buffer = new StringBuilder();
+		for(int i = 0; i < times; i++) {
+			buffer.append(str);
+		}
+		return buffer.toString();
+	}
+
+	/**
+	 * Checks if a string is null or empty.
+	 * 
+	 * @param str is the string.
+	 * @return true if the string is null or empty.
+	 * @author Alexey Vaskovsky <http://vaskovsky.net/java-snippets/>
+	 */
+	public static boolean isEmpty(String str)
+	{
+		return str == null || str.isEmpty();
+	}
+
+	/**
 	 * Usage example and minimal unit test.
 	 * 
 	 * @param args are ignored.
 	 */
 	public static void main(String[] args)
 	{
-		assert Strings.join(";", new String[] {"a", "b", "c"})
-			== "a;b;c";
+		assert join(";", new Object[] {"a", "b", "c"}).equals("a;b;c");
+		assert repeat("(abc)", 3).equals("(abc)(abc)(abc)");
+		assert isEmpty(null) == true;
+		assert isEmpty("") == true;
+		assert isEmpty(" ") == false;		
 		System.out.println("OK Strings");
 	}
 }

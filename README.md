@@ -6,6 +6,8 @@
 
 [Classes](http://vaskovsky.net/java-snippets/annotated.html)
 
+[Changelog](http://vaskovsky.net/java-snippets/md_CHANGELOG.html)
+
 [Download](https://github.com/vaskovsky/java-snippets/archive/master.zip)
 
 ## License MIT
